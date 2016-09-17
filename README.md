@@ -2,7 +2,7 @@
 
 [![npm version](https://badge.fury.io/js/ember-metrics-mixins.svg)](https://badge.fury.io/js/ember-metrics-mixins)
 
-This mixin will add the boilerplate to your router.
+This mixin will add the `ember-metrics` boilerplate to your router.
 
 ## Installation
 
