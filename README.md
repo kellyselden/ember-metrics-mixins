@@ -1,25 +1,21 @@
-# Ember-metrics-mixins
+# ember-metrics-mixins
 
-This README outlines the details of collaborating on this Ember addon.
+[![npm version](https://badge.fury.io/js/ember-metrics-mixins.svg)](https://badge.fury.io/js/ember-metrics-mixins)
+
+This mixin will add the boilerplate to your router.
 
 ## Installation
 
-* `git clone` this repository
-* `npm install`
-* `bower install`
+`ember install ember-metrics-mixins`
 
-## Running
+## Usage
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+Just add this to your `app/router.js`:
 
-## Running Tests
+```js
+import EmberMetricsRouterMixin from 'ember-metrics-mixins/mixins/router';
 
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+const Router = Ember.Router.extend(EmberMetricsRouterMixin, {
+  //...
+});
+```
