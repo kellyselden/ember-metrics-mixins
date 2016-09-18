@@ -40,6 +40,9 @@
     "ember-welcome-page": "^1.0.1",
     "loader.js": "^4.0.1"
   },
+  "peerDependencies": {
+    "ember-metrics": "*"
+  },
   "keywords": [
     "ember-addon"
   ],
