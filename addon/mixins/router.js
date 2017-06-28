@@ -12,7 +12,7 @@ export default Ember.Mixin.create({
     Ember.run.scheduleOnce('afterRender', () => {
       this.get('metrics').trackPage({
         page: this.get('url'),
-        title: this.get('currentRouteName')
+        title: this.getWithDefault('currentRouteName', 'unknown')
       });
     });
   }
