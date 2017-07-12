@@ -18,6 +18,16 @@ Just add this to your `app/router.js`:
 import EmberMetricsRouterMixin from 'ember-metrics-mixins/mixins/router';
 
 const Router = Ember.Router.extend(EmberMetricsRouterMixin, {
-  //...
+  // ...
+
+  // optional
+  mergeAdditionalOptions(infos) {
+    // get something off `infos`
+    return {
+      foo: 'bar'
+    };
+  }
 });
 ```
+
+It sends `trackPage` with `url`, `routeName`, and whatever else you merged.
