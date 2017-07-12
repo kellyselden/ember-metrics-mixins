@@ -4,7 +4,7 @@ function trackPage() {
   Ember.run.scheduleOnce('afterRender', () => {
     this.get('metrics').trackPage({
       page: this.get('url'),
-      title: this.getWithDefault('currentRouteName', 'unknown')
+      title: this.get('currentRouteName')
     });
   });
 }
