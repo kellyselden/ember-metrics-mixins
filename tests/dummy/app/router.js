@@ -7,7 +7,18 @@ const Router = Ember.Router.extend(EmberMetricsRouterMixin, {
   rootURL: config.rootURL,
 
   // this verifies we don't clobber the `metrics` key for apps
-  metrics() {}
+  metrics() {},
+
+  mergeAdditionalOptions(infos) {
+    let info = infos[infos.length - 1];
+
+    // ember 1.13 support
+    let handler = info._handler || info.handler;
+
+    return {
+      pageName: handler.get('pageName')
+    };
+  }
 });
 
 Router.map(function() {
