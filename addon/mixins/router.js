@@ -1,8 +1,14 @@
 import Ember from 'ember';
 
+let metrics;
+
 function trackPage() {
+  if (!metrics) {
+    metrics = Ember.getOwner(this).lookup('service:metrics');
+  }
+
   Ember.run.scheduleOnce('afterRender', () => {
-    this.get('metrics').trackPage({
+    metrics.trackPage({
       page: this.get('url'),
       title: this.get('currentRouteName')
     });
@@ -10,8 +16,6 @@ function trackPage() {
 }
 
 export default Ember.Mixin.create({
-  metrics: Ember.inject.service(),
-
   didTransition() {
     this._super(...arguments);
 

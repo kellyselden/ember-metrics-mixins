@@ -4,7 +4,10 @@ import EmberMetricsRouterMixin from 'ember-metrics-mixins/mixins/router';
 
 const Router = Ember.Router.extend(EmberMetricsRouterMixin, {
   location: config.locationType,
-  rootURL: config.rootURL
+  rootURL: config.rootURL,
+
+  // this verifies we don't clobber the `metrics` key for apps
+  metrics() {}
 });
 
 Router.map(function() {
