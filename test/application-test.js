@@ -1,40 +1,34 @@
 'use strict';
 
-const expect = require('chai').expect;
+const path = require('path');
 const denodeify = require('denodeify');
-const request = denodeify(require('request'));
+const cpr = denodeify(require('cpr'));
 const AddonTestApp = require('ember-cli-addon-tests').AddonTestApp;
 
 describe('Acceptance | Application', function() {
   this.timeout(900000);
 
-  let app;
-
-  before(function() {
-    app = new AddonTestApp();
+  it('works', function() {
+    let app = new AddonTestApp();
 
     return app.create('dummy', {
       fixturesPath: 'tests'
     }).then(() => {
-      return app.runEmberCommand(
-        'install',
-        `ember-cli-fastboot@${process.env.npm_package_devDependencies_ember_cli_fastboot}`
-      );
+      return Promise.all([
+        'config/ember-try.js',
+        'tests'
+      ].map(p => cpr(p, path.join(app.path, p), {
+        overwrite: true,
+        filter(p) {
+          return !p.startsWith(path.normalize('tests/dummy'));
+        }
+      })));
     }).then(() => {
-      return app.startServer();
-    });
-  });
-
-  afterEach(function() {
-    return app.stopServer();
-  });
-
-  it('works', function() {
-    return request({
-      url: 'http://localhost:49741/foo/bar',
-      headers: { 'Accept': 'text/html' }
-    }).then(response => {
-      expect(response.body).to.contain('foo/bar foo.bar');
+      return app.runEmberCommand(
+        'try:one',
+        process.env.EMBER_TRY_SCENARIO,
+        '--skip-cleanup'
+      );
     });
   });
 });

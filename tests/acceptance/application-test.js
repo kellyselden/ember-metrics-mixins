@@ -7,6 +7,6 @@ test('visiting foo/bar', function(assert) {
   visit('foo/bar');
 
   andThen(function() {
-    assert.equal(find('*').text(), 'foo/bar foo.bar');
+    assert.equal(find('#foo-bar').text().trim(), 'foo/bar foo.bar');
   });
 });
