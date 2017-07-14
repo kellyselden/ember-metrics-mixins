@@ -6,7 +6,7 @@ const cpr = denodeify(require('cpr'));
 const AddonTestApp = require('ember-cli-addon-tests').AddonTestApp;
 
 describe('Acceptance | Application', function() {
-  this.timeout(900000);
+  this.timeout(12000000);
 
   it('works', function() {
     let app = new AddonTestApp();
