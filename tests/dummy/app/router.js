@@ -10,13 +10,8 @@ const Router = EmberRouter.extend(EmberMetricsRouterMixin, {
   metrics() {},
 
   mergeAdditionalOptions(infos) {
-    let info = infos[infos.length - 1];
-
-    // ember 1.13 support
-    let handler = info._handler || info.handler;
-
     return {
-      pageName: handler.get('pageName')
+      pageName: infos[infos.length - 1]._handler.get('pageName')
     };
   }
 });
