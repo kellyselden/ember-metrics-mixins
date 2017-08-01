@@ -17,7 +17,7 @@ describe('Acceptance | Application', function() {
       return Promise.all([
         'config/ember-try.js',
         'tests'
-      ].map(p => cpr(p, path.join(app.path, p), {
+      ].map(p => cpr(p, app.filePath(p), {
         overwrite: true,
         filter(p) {
           return !p.startsWith(path.normalize('tests/dummy'));
