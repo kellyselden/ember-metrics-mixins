@@ -1,10 +1,13 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
+import { scheduleOnce } from '@ember/runloop';
+import { assign } from '@ember/polyfills';
+import { getOwner } from '@ember/application';
 
 let metrics;
 
 function trackPage(infos) {
   if (!metrics) {
-    metrics = Ember.getOwner(this).lookup('service:metrics');
+    metrics = getOwner(this).lookup('service:metrics');
   }
 
   let options = {
@@ -12,14 +15,14 @@ function trackPage(infos) {
     routeName: this.get('currentRouteName')
   };
 
-  Ember.assign(options, this.mergeAdditionalOptions(infos));
+  assign(options, this.mergeAdditionalOptions(infos));
 
-  Ember.run.scheduleOnce('afterRender', () => {
+  scheduleOnce('afterRender', () => {
     metrics.trackPage(options);
   });
 }
 
-export default Ember.Mixin.create({
+export default Mixin.create({
   didTransition() {
     this._super(...arguments);
 
