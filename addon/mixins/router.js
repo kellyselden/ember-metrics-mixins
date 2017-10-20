@@ -10,14 +10,14 @@ function trackPage(infos) {
     metrics = getOwner(this).lookup('service:metrics');
   }
 
-  let options = {
-    url: this.get('url'),
-    routeName: this.get('currentRouteName')
-  };
-
-  assign(options, this.mergeAdditionalOptions(infos));
-
   scheduleOnce('afterRender', () => {
+    let options = {
+      url: this.get('url'),
+      routeName: this.get('currentRouteName')
+    };
+
+    assign(options, this.mergeAdditionalOptions(infos));
+
     metrics.trackPage(options);
   });
 }

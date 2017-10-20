@@ -3,10 +3,16 @@ import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | application');
 
-test('visiting foo/bar', function(assert) {
-  visit('foo/bar');
+test('it works between route transitions', function(assert) {
+  visit('foo');
 
   andThen(function() {
-    assert.equal(find('#foo-bar').text().trim(), 'foo/bar foo.bar foo-bar');
+    assert.equal(find('#foo').text().trim(), 'foo foo.index foo');
+  });
+
+  click('a');
+
+  andThen(function() {
+    assert.equal(find('#foo-bar').text().trim(), '/foo/bar foo.bar foo-bar');
   });
 });
