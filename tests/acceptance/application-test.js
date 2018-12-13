@@ -1,40 +1,39 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { click, find, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | application');
+module('Acceptance | application', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('it works between route transitions', function(assert) {
-  visit('foo');
+  test('it works between route transitions', async function(assert) {
+    await visit('foo');
 
-  andThen(function() {
-    assert.equal(find('#foo').text().trim(), 'foo foo.index foo');
+    assert.equal(find('#foo').textContent.trim(), 'foo foo.index foo');
+
+    await click('a');
+
+    assert.equal(find('#foo-bar').textContent.trim(), '/foo/bar foo.bar foo-bar');
   });
 
-  click('a');
+  let oldMetricsService;
 
-  andThen(function() {
-    assert.equal(find('#foo-bar').text().trim(), '/foo/bar foo.bar foo-bar');
+  test('it doesn\'t cache the metrics service - part 1 of 2', async function(assert) {
+    await visit('/');
+
+    let metrics = this.owner.lookup('service:metrics');
+
+    assert.notEqual(metrics, oldMetricsService);
+
+    oldMetricsService = metrics;
   });
-});
 
-let oldMetricsService;
+  test('it doesn\'t cache the metrics service - part 2 of 2', async function(assert) {
+    await visit('/');
 
-test('it doesn\'t cache the metrics service - part 1 of 2', function(assert) {
-  visit('/');
+    let metrics = this.owner.lookup('service:metrics');
 
-  let metrics = this.application.__container__.lookup('service:metrics');
+    assert.notEqual(metrics, oldMetricsService);
 
-  assert.notEqual(metrics, oldMetricsService);
-
-  oldMetricsService = metrics;
-});
-
-test('it doesn\'t cache the metrics service - part 2 of 2', function(assert) {
-  visit('/');
-
-  let metrics = this.application.__container__.lookup('service:metrics');
-
-  assert.notEqual(metrics, oldMetricsService);
-
-  oldMetricsService = metrics;
+    oldMetricsService = metrics;
+  });
 });
